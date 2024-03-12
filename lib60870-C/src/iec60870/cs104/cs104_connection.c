@@ -1155,12 +1155,12 @@ void
 CS104_Connection_sendStartDT(CS104_Connection self)
 {
     /* TODO: should add a return value? */
+    if (!isRunning(self))
+        return;
+
 #if (CONFIG_USE_SEMAPHORES == 1)
     Semaphore_wait(self->conStateLock);
 #endif /* (CONFIG_USE_SEMAPHORES == 1) */
-
-    if (!isRunning(self))
-        return;
 
     self->conState = STATE_WAITING_FOR_STARTDT_CON;
 
@@ -1175,12 +1175,12 @@ void
 CS104_Connection_sendStopDT(CS104_Connection self)
 {
     /* TODO: should add a return value? */
+    if (!isRunning(self))
+        return;
+
 #if (CONFIG_USE_SEMAPHORES == 1)
     Semaphore_wait(self->conStateLock);
 #endif /* (CONFIG_USE_SEMAPHORES == 1) */
-
-    if (!isRunning(self))
-        return;
 
     confirmOutstandingMessages(self);
 
