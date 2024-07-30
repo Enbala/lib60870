@@ -1178,6 +1178,10 @@ encodeIOA(CS104_Connection self, Frame frame, int ioa)
 void
 CS104_Connection_sendStartDT(CS104_Connection self)
 {
+    /* TODO: should add a return value? */
+    if (!isRunning(self))
+        return;
+
 #if (CONFIG_USE_SEMAPHORES == 1)
     Semaphore_wait(self->conStateLock);
 #endif /* (CONFIG_USE_SEMAPHORES == 1) */
@@ -1201,6 +1205,10 @@ CS104_Connection_sendMessage(CS104_Connection self, uint8_t* message, int messag
 void
 CS104_Connection_sendStopDT(CS104_Connection self)
 {
+    /* TODO: should add a return value? */
+    if (!isRunning(self))
+        return;
+
 #if (CONFIG_USE_SEMAPHORES == 1)
     Semaphore_wait(self->conStateLock);
 #endif /* (CONFIG_USE_SEMAPHORES == 1) */
