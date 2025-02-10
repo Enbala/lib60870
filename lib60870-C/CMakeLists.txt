@@ -12,7 +12,7 @@ ENABLE_TESTING()
 
 set(LIB_VERSION_MAJOR "2")
 set(LIB_VERSION_MINOR "3")
-set(LIB_VERSION_PATCH "2")
+set(LIB_VERSION_PATCH "4")
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/third_party/cmake/modules/")
 
@@ -22,7 +22,6 @@ endmacro()
 
 # feature checks
 include(CheckLibraryExists)
-check_library_exists(rt clock_gettime "time.h" CONFIG_SYSTEM_HAS_CLOCK_GETTIME)
 
 # check if we are on a little or a big endian
 include (TestBigEndian)

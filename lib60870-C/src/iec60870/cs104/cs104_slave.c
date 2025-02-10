@@ -587,8 +587,8 @@ HighPriorityASDUQueue_create(int maxQueueSize)
 {
     HighPriorityASDUQueue self = (HighPriorityASDUQueue) GLOBAL_MALLOC(sizeof(struct sHighPriorityASDUQueue));
 
-    if (self) {
-
+    if (self)
+    {
         self->size = maxQueueSize * (sizeof(uint16_t) + 256);
 
         self->buffer = (uint8_t*) GLOBAL_CALLOC(1, self->size);
@@ -812,9 +812,9 @@ HighPriorityASDUQueue_resetConnectionQueue(HighPriorityASDUQueue self)
     Semaphore_wait(self->queueLock);
 #endif
 
-    self->firstEntry = 0;
-    self->lastEntry = 0;
-    self->lastInBufferEntry = 0;
+    self->firstEntry = NULL;
+    self->lastEntry = NULL;
+    self->lastInBufferEntry = NULL;
     self->entryCounter = 0;
 
 #if (CONFIG_USE_SEMAPHORES == 1)
@@ -2542,13 +2542,13 @@ handleMessage(MasterConnection self, uint8_t* buffer, int msgSize)
 
             if (MasterConnection_isActive(self))
             {
-                CS101_ASDU asdu = CS101_ASDU_createFromBuffer(&(self->slave->alParameters), buffer + 6, msgSize - 6);
+                struct sCS101_ASDU _asdu;
+
+                CS101_ASDU asdu = CS101_ASDU_createFromBufferEx(&_asdu, &(self->slave->alParameters), buffer + 6, msgSize - 6);
 
                 if (asdu)
                 {
                     bool validAsdu = handleASDU(self, asdu);
-
-                    CS101_ASDU_destroy(asdu);
 
                     if (validAsdu == false) {
                         DEBUG_PRINT("CS104 SLAVE: ASDU corrupted");
